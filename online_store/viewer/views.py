@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import TemplateView
-from .models import Potraviny
+from .models import Category, Product
 # Create your views here.
 
 class MainPageView(TemplateView):
@@ -14,5 +14,6 @@ class BasePageView(TemplateView):
 class PotravinyView(TemplateView):
     template_name = "viewer/potraviny.html"
     extra_context = {
-        'all_potraviny': Potraviny.objects.all()
+        'all_category': Category.objects.all(),
+        'all_product': Product.objects.all()
     }

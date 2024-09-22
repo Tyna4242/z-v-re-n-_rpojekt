@@ -2,9 +2,15 @@
 
 {% block content %}
 
-    <h2>Potraviny</h2>
-    {% for potravina in all_potraviny %}
-    <br>{{ potravina.potravina }} -{{ potravina.cena }}
+    <h2>Kategorie</h2>
+    {% for category in all_category %}
+    <br>{{ category.name }}
+    {% endfor %}
+
+    <h2>Produkty</h2>
+    {% for product in all_product %}
+    <br>Název: {{ product.title }}
+    <br>Popis: {{ product.description }}
     {% endfor %}
 
 {% endblock %}

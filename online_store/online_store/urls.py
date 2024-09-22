@@ -16,9 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from viewer.views import MainPageView
-from viewer.models import Potraviny
 from viewer.views import PotravinyView
-admin.site.register(Potraviny)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
