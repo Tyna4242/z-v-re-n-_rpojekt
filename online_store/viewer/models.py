@@ -3,5 +3,8 @@ from django.contrib.auth.models import User
 
 
 class Potraviny(models.Model):
-    pecivo = models.CharField(max_length=100)
-    ovoce = models.CharField(max_length=100)
+    potravina = models.CharField(max_length=100)
+    cena = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.potravina} - {self.cena}"

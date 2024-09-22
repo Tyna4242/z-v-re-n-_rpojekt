@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h2>Potraviny</h2>
+    {% for potravina in all_potraviny %}
+    <br>{{ potravina.potravina }} -{{ potravina.cena }}
+    {% endfor %}
+
+{% endblock %}
