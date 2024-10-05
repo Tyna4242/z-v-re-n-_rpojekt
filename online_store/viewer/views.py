@@ -39,3 +39,7 @@ class ProductDeleteView(DeleteView):
     form_class = ProductForm
     model = Product
     success_url = reverse_lazy('potraviny-view')
+
+class IndexView(TemplateView):
+    template_name = "index.html"
+    extra_context = {}

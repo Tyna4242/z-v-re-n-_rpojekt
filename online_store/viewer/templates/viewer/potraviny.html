@@ -10,7 +10,9 @@
     <h2>Produkty</h2>
     {% for product in all_product %}
     <br>Název: {{ product.title }}
-    <br>Popis: {{ product.description }}  <a href="{% url 'potraviny-update-view' product.pk %}">Update potravina</a>
+    <br>Popis: {{ product.features }} 
+    
+    <br>Speciálně: {% for feature in product.features.all %} {{ feature.feature_name }} {% endfor %}<a href="{% url 'potraviny-update-view' product.pk %}">Update potravina</a>
     <a href="{% url 'potraviny-delete-view' product.pk %}">Delete potravina</a>
     {% endfor %}
 
