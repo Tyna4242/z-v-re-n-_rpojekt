@@ -10,6 +10,6 @@ urlpatterns = [
     path('potraviny/update/<int:pk>/', ProductUpdateView.as_view(), name='potraviny-update-view'),
     path('potraviny/delete/<int:pk>/', ProductDeleteView.as_view(), name='potraviny-delete-view'),
     path('index/', IndexView.as_view(), name='index-view'),
-    path('logout/', LogoutView.as_view(), name='logout'),
-    path('login/', LoginView.as_view(), name='login'),
+    path('accounts/logout/', LogoutView.as_view(), name='logout'),
+    path('accounts/login/', LoginView.as_view(), name='login'),
 ]

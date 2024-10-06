@@ -3,6 +3,7 @@ from django.views.generic import TemplateView, CreateView, UpdateView, DeleteVie
 from .models import Category, Product
 from django.urls import reverse_lazy
 from viewer.forms import ProductForm
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 # Create your views here.
 
 class MainPageView(TemplateView):
@@ -20,7 +21,7 @@ class PotravinyView(TemplateView):
         'all_product': Product.objects.all()
     }
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'viewer/form.html'
     form_class = ProductForm
     model = Product
@@ -34,11 +35,12 @@ class ProductUpdateView(UpdateView):
     success_url = reverse_lazy('potraviny-view')
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(PermissionRequiredMixin, DeleteView):
     template_name = 'viewer/product_confirm_delete.html'
     form_class = ProductForm
     model = Product
     success_url = reverse_lazy('potraviny-view')
+    permission_required = 'viewer.potraviny-delete-view'  # Název oprávnění (nahraď 'app_name' názvem své aplikace)
 
 class IndexView(TemplateView):
     template_name = "index.html"
