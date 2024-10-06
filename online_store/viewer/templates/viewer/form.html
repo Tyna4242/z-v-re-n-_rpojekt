@@ -2,10 +2,50 @@
 
 {% block content %}
 
-    <form method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit">
-    </form>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.non_field_errors }}
+
+    <div>
+        {{ form.title.label_tag }} {{ form.title }}
+        {% if form.title.errors %}
+            <div style="color: red;">
+                {% for error in form.title.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+
+    <div>
+        {{ form.description.label_tag }} {{ form.description }}
+    </div>
+
+    <div>
+        {{ form.thumbnail.label_tag }} {{ form.thumbnail }}
+    </div>
+
+    <div>
+        {{ form.category.label_tag }} {{ form.category }}
+    </div>
+
+    <div>
+        {{ form.price.label_tag }} {{ form.price }}
+    </div>
+
+    <div>
+        {{ form.stock_quantity.label_tag }} {{ form.stock_quantity }}
+    </div>
+
+    <div>
+        {{ form.unit.label_tag }} {{ form.unit }}
+    </div>
+
+    <div>
+        {{ form.features.label_tag }} {{ form.features }}
+    </div>
+
+    <button type="submit">Vytvořit produkt</button>
+</form>
 
 {% endblock %}
