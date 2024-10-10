@@ -4,6 +4,8 @@ from .models import Category, Product
 from django.urls import reverse_lazy
 from viewer.forms import ProductForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
 # Create your views here.
 
 class MainPageView(TemplateView):
@@ -45,3 +47,9 @@ class ProductDeleteView(PermissionRequiredMixin, DeleteView):
 class IndexView(TemplateView):
     template_name = "index.html"
     extra_context = {}
+
+class SignUpView(CreateView):
+  model = User
+  template_name = 'viewer/form.html'
+  form_class = UserCreationForm
+  success_url = reverse_lazy('login')
