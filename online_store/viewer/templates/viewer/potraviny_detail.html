@@ -10,7 +10,11 @@
 
 <p>{{comment.text}}</p>
 
+
 {% endfor %}
+
+
+<a href="{% url 'create_comment' potraviny_detail.pk %}">Přidat komentář</a>
 
 
 {% endblock %}

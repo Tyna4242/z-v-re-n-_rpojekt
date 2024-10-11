@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import MainPageView, BasePageView, PotravinyView, ProductCreateView, ProductUpdateView, ProductDeleteView, IndexView, SignUpView, CategoryView
-from .views import PotravinyDetailedView
+from .views import PotravinyDetailedView, CommentCreateView, send_email_to_user, api_get_all_products, api_get_all_comments
 from django.contrib.auth.views import LogoutView, LoginView
 
 urlpatterns = [
@@ -16,4 +16,8 @@ urlpatterns = [
     path('users/login/', LoginView.as_view(), name='login'),
     path('users/register/', SignUpView.as_view(), name='registration'),
     path('potraviny/<pk>', PotravinyDetailedView.as_view(), name='potraviny_detail'),
+    path('comment/create/<product_pk>', CommentCreateView.as_view(), name='create_comment'),
+    path('send_emails_to_user', send_email_to_user),
+    path('api/product/get_all', api_get_all_products),
+    path('api/comment/get_all', api_get_all_comments),
 ]

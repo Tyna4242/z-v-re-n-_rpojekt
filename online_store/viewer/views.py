@@ -6,6 +6,7 @@ from viewer.forms import ProductForm, CommentForm
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from django.http import HttpResponse, JsonResponse
 # Create your views here.
 
 class MainPageView(TemplateView):
@@ -70,3 +71,36 @@ class PotravinyDetailedView(TemplateView):
     context["potraviny_detail"] = Product.objects.get(pk=int(kwargs["pk"]))
     context["potraviny_comments"] = Comment.objects.filter(product__pk=int(kwargs["pk"]))
     return context
+  
+class CommentCreateView(CreateView):
+  template_name = 'viewer/form.html'
+  form_class = CommentForm
+  success_url = reverse_lazy("potraviny")
+
+  def form_valid(self, form):
+    new_comment : Comment = form.save(commit=False)
+    new_comment.product = Product.objects.get(pk=int(self.kwargs["product_pk"]))
+    new_comment.save()
+    return super().form_valid(form)
+  
+
+def send_email_to_user(request):
+    print(f"Máme nové zboží {Product.objects.all()} ")
+
+    return HttpResponse("vše OK")
+
+def api_get_all_products(request):
+  all_products = Product.objects.all()
+  json_all_products = {}
+  for product in all_products:
+    json_all_products[product.pk] = {
+      "název": str(product.title),
+      "popis": str(product.description)
+    }
+
+  return JsonResponse(json_all_products)
+
+
+def api_get_all_comments(request):
+  json_all_comments = { comment.pk: {"text":str(comment.text)} for comment in Comment.objects.all()}
+  return JsonResponse(json_all_comments)
