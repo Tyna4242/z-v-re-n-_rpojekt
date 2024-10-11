@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from viewer.models import Category, Product
+from viewer.models import Category, Product, Comment
 from django import forms
 
 class ProductForm(ModelForm):
@@ -15,12 +15,10 @@ class ProductForm(ModelForm):
     
 
 
-
-
-
-
-
-
+class CommentForm(ModelForm):
+  class Meta:
+    model = Comment
+    fields = ['text']
 
 
 

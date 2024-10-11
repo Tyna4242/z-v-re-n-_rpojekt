@@ -31,3 +31,7 @@ class Product(models.Model):
         return self.title
 
 
+class Comment(models.Model):
+    text = models.CharField(max_length=128)
+    product = models.ForeignKey(Product, on_delete=models.DO_NOTHING)
+
