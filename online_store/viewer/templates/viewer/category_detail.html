@@ -5,6 +5,13 @@
 
 <h2>Produkty v kategorii {{ category.name }}</h2>
 
+
+<form method="GET" action="">
+    <input type="text" name="q" placeholder="Vyhledat produkt">
+    <button type="submit">Hledat</button>
+</form>
+
+
 <ul>
 {% for product in products_detail %}
     <li> 
