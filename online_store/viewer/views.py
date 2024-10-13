@@ -28,10 +28,12 @@ class CategoryView(ListView):
     model = Category
     template_name = "viewer/category.html"
     context_object_name = 'categories'
-    extra_context = {
-        'all_category': Category.objects.all(),
-        'all_product': Product.objects.all()
-    }
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Získání všech parent kategorií (ty, které nemají parent kategorie)
+        context['parent_categories'] = Category.objects.filter(parent__isnull=True).prefetch_related('children')
+        return context
 
 class CategoryDetailView(DetailView):
    model = Category
@@ -41,6 +43,7 @@ class CategoryDetailView(DetailView):
         'all_product': Product.objects.all()
     }
    
+
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
       context['products_detail'] = Product.objects.filter(category=self.object)
