@@ -53,6 +53,14 @@ class CategoryDetailView(DetailView):
       if query:
          products = products.filter(title__icontains=query)
      
+      min_price = self.request.GET.get('min_price')
+      max_price = self.request.GET.get('max_price')
+
+      if min_price:
+            products = products.filter(price__gte=min_price)
+      if max_price:
+            products = products.filter(price__lte=max_price)
+
       paginator = Paginator(products, 10)
       page_number = self.request.GET.get('page')
       page_obj = paginator.get_page(page_number)
