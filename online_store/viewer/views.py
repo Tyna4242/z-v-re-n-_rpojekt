@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, FormView
+from django.views.generic import TemplateView, CreateView, UpdateView, DeleteView, FormView, ListView, DetailView
 from .models import Category, Product, Comment
 from django.urls import reverse_lazy
 from viewer.forms import ProductForm, CommentForm
@@ -24,12 +24,38 @@ class PotravinyView(TemplateView):
         'all_product': Product.objects.all()
     }
 
-class CategoryView(TemplateView):
+class CategoryView(ListView):
+    model = Category
     template_name = "viewer/category.html"
+    context_object_name = 'categories'
     extra_context = {
         'all_category': Category.objects.all(),
         'all_product': Product.objects.all()
     }
+
+class CategoryDetailView(DetailView):
+   model = Category
+   template_name = 'viewer/category_detail.html'
+   extra_context = {
+        'all_category': Category.objects.all(),
+        'all_product': Product.objects.all()
+    }
+   
+   def get_context_data(self, **kwargs):
+      context = super().get_context_data(**kwargs)
+      context['products_detail'] = Product.objects.filter(category=self.object)
+      return context
+
+
+class PotravinyDetailedView(TemplateView):
+  template_name = 'viewer/potraviny_detail.html'
+
+  def get_context_data(self, **kwargs):
+    context = super().get_context_data( **kwargs)
+    context["potraviny_detail"] = Product.objects.get(pk=int(kwargs["pk"]))
+    context["potraviny_comments"] = Comment.objects.filter(product__pk=int(kwargs["pk"]))
+    return context
+
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
     template_name = 'viewer/form.html'
@@ -63,14 +89,6 @@ class SignUpView(CreateView):
   success_url = reverse_lazy('login')
 
 
-class PotravinyDetailedView(TemplateView):
-  template_name = 'viewer/potraviny_detail.html'
-
-  def get_context_data(self, **kwargs):
-    context = super().get_context_data( **kwargs)
-    context["potraviny_detail"] = Product.objects.get(pk=int(kwargs["pk"]))
-    context["potraviny_comments"] = Comment.objects.filter(product__pk=int(kwargs["pk"]))
-    return context
   
 class CommentCreateView(CreateView):
   template_name = 'viewer/form.html'

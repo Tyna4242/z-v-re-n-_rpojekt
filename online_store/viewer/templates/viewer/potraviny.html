@@ -11,6 +11,7 @@
     {% for product in all_product %}
     <br>Název: {{ product.title }}
     <br>Info: {{ product.description }}
+    <br>Kategorie: {{ product.category }}
     
     <br>Speciálně: {% for feature in product.features.all %} {{ feature.feature_name }} {% endfor %}
     

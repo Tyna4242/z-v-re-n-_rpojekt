@@ -4,9 +4,13 @@
 
 
 <h2>Kategorie</h2>
+
+<ul>
 {% for category in all_category %}
-<br>{{ category.name }}
+    <li><a href="{% url 'category-detail-view' category.id %}">{{ category.name }}  </a> </li>
 {% endfor %}
+
+</ul>
 
 
 {% endblock %}
