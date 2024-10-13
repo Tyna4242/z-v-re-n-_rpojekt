@@ -7,6 +7,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse, JsonResponse
+from django.core.paginator import Paginator
 # Create your views here.
 
 class MainPageView(TemplateView):
@@ -46,7 +47,11 @@ class CategoryDetailView(DetailView):
 
    def get_context_data(self, **kwargs):
       context = super().get_context_data(**kwargs)
-      context['products_detail'] = Product.objects.filter(category=self.object)
+      products = Product.objects.filter(category=self.object)
+      paginator = Paginator(products, 10)
+      page_number = self.request.GET.get('page')
+      page_obj = paginator.get_page(page_number)
+      context['products_detail'] = page_obj
       return context
 
 
